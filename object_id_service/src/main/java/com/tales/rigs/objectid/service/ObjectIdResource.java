@@ -45,7 +45,7 @@ public class ObjectIdResource {
 	/**
 	 * Sets up the types, processing those that may not be ready.
 	 */
-	@ResourceOperation( name="setup_types", path="POST : types/setup" )
+	@ResourceOperation( name="setup_types", path="GET | POST : types/setup" )
 	public void setupTypes( ) {
 		engine.setupTypes();
 	}

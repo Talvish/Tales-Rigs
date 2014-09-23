@@ -106,16 +106,27 @@ public class ObjectIdManager {
 		ResourceResult<IdBlock> response = null;
 
 		if( generator == null ) {
-			// if we don't have 
+			// if we don't have a generator we create some ids and
+			// later use the result to create and save the generator
 			response = client.generateIds( theTypeName, requestSize );
-			generator = new ObjectIdGenerator( theTypeName, response.getResult().getTypeId() );
-			generators.put( theTypeName, generator );
+			
 		} else if( generator.getAvailableValues() <= requestThreshold ) {
+			// we also generate ids if we are within threshold, we 
+			// could collapse code here, but we may be putting in 
+			// more logic in these two cases
 			response = client.generateIds( theTypeName, requestSize );
 		}
+		
 		if( response != null ) { 
 			if( response.getStatus().getCode().isSuccess( ) ) {
+				// if the generator is null then we didn't create/save
+				// locally so we have to do that
+				if( generator == null ) {
+					generator = new ObjectIdGenerator( theTypeName, response.getResult().getTypeId() );
+					generators.put( theTypeName, generator );
+				}
 				generator.addValues( response.getResult() );
+
 			} else {
 				// TODO: the above doesn't handle errors from the server
 				//       500 level errors we should throw back
@@ -124,7 +135,7 @@ public class ObjectIdManager {
 				throw new CommunicationException( String.format( 
 						"Ran into trouble, '%s', trying to increase values for ObjectIds of type '%s'", 
 						response.getStatus().getCode(), 
-						generator.getTypeName() ) );
+						theTypeName ) );
 			}
 		}
 		
