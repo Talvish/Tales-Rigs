@@ -1,0 +1,5 @@
+Maven Config Fiels
+-----------------
+- look at ensuring config isn't put into classes/resources directories
+  http://stackoverflow.com/questions/3001713/where-in-maven-projects-path-should-i-put-configuration-files-that-are-not-cons/3004684#3004684
+  http://stackoverflow.com/questions/4113697/in-maven-how-to-exclude-resources-from-the-generated-jar 

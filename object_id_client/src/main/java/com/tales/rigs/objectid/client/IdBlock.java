@@ -18,9 +18,6 @@ package com.tales.rigs.objectid.client;
 import com.tales.contracts.data.DataContract;
 import com.tales.contracts.data.DataMember;
 
-
-// TODO: the items in object id/business objects could perhaps all be under the solutions package?
-//       also, need to look at serializers for objects
 /**
  * The block describing a set of values that 
  * a client can use for generating ids.
