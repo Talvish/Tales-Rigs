@@ -72,12 +72,17 @@ public class ObjectIdEngine {
 		
 		configurationManager = theConfigurationManager;
 		
+		String hostname = configurationManager.getStringValue( ConfigurationConstants.HOSTNAME );
+		Preconditions.checkArgument( !Strings.isNullOrEmpty( hostname ), "To setup the object id service a host name using setting '%s' must be given.", ConfigurationConstants.HOSTNAME );
+		
 		// get the underlying source identifier
-		Long loadedSourceId = configurationManager.getLongValue( ConfigurationConstants.SOURCE_ID );
+		Long loadedSourceId = configurationManager.getLongValue( String.format( ConfigurationConstants.SOURCE_ID_FORMAT, hostname ) );
 		Preconditions.checkArgument( loadedSourceId != null, "The source id from configuration must be set." );
 		sourceId = loadedSourceId;
 		Preconditions.checkArgument( sourceId > 0, "The source id from configuration must be greater than zero." );
-		
+
+		logger.info( "Service is using id source hostname '{}' which is source id '{}'.", hostname, sourceId );
+
 		// now we get the data directory and make sure it exists
 		dataDirectory = new File( configurationManager.getStringValue( ConfigurationConstants.DATA_DIRECTORY ) );
 		Preconditions.checkState( !dataDirectory.exists() || dataDirectory.isDirectory(), "The specified data directory, '%s', is not a directory.", dataDirectory.toString( ) );
