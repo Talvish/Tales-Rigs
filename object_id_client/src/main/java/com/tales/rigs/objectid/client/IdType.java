@@ -30,7 +30,10 @@ public class IdType extends TimestampedBase {
 	@DataMember( name="description" )private String description;
 	
 	@DataMember( name="id" )private int id;
-	@DataMember( name="source")private long source;
+
+	// we don't expose these two since they aren't relevant from the client's perspective
+	// but we leave it on this class since it can be look at for debugging purposes
+	@DataMember( name="source")private long source; 
 	@DataMember( name="last_value" )private long lastValue;
 
 	/**
@@ -62,21 +65,5 @@ public class IdType extends TimestampedBase {
 	 */
 	public int getId( ) {
 		return id;
-	}
-	
-	/**
-	 * Gets the source associated with this particular id/value.
-	 * @return the source
-	 */
-	public long getSource( ) {
-		return source;
-	}
-	
-	/**
-	 * The last value that was generated for this type on the associated source.
-	 * @return the last value generated
-	 */
-	public long getLastValue( ) {
-		return lastValue;
 	}
 }

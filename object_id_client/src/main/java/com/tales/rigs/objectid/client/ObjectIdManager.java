@@ -15,7 +15,9 @@
 // ***************************************************************************
 package com.tales.rigs.objectid.client;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Preconditions;
@@ -35,6 +37,11 @@ public class ObjectIdManager {
 	private final long requestSize;
 	private final long requestThreshold;
 	private final ObjectIdClient client;
+	
+	private final Map<String,IdType> idTypesByName = new HashMap<String,IdType>( );
+	private final Map<Integer,IdType> idTypesById = new HashMap<Integer, IdType>( );
+	private final Object idTypeLock = new Object();
+	private LocalDateTime cacheExpiration = LocalDateTime.now(); // TODO: we need to do this and look at how we are serving/updating these values
 	
 	// TODO: add async handling, which will be part of internalPrepare and may impact generateObjectId
 	//       (e.g. force requests, or what if some are outstanding, etc)
@@ -58,6 +65,8 @@ public class ObjectIdManager {
 		requestThreshold = theRequestThreshold;
 		
 		client = new ObjectIdClient( theServiceEndpoint, theUserAgent );
+		
+		// TODO: consider starting a thread to get type information
 	}
 	
 	/**
@@ -69,6 +78,65 @@ public class ObjectIdManager {
 	public ObjectId generateObjectId( String theTypeName ) throws InterruptedException {
 		return internalPrepare( theTypeName ).generateObjectId( ); // this will validate the name
 	}
+	
+	/**
+	 * Gets type information by the type name.
+	 * @param theTypeName the type name to get information for
+	 * @return the type information, or null if not found
+	 * @throws InterruptedException thrown if thread was interrupted
+	 */
+	public IdType getType( String theTypeName ) throws InterruptedException {
+		Preconditions.checkArgument( !Strings.isNullOrEmpty( theTypeName ), "need a type name" );
+		
+		if( !cacheExpiration.isAfter( LocalDateTime.now() ) ) {
+			fetchTypes( ); // TODO: we aren't serving stale, we wait,but we could serve stale and background load
+		}
+		return idTypesByName.get( theTypeName );
+	}
+	
+	/**
+	 * Gets type information by the type id.
+	 * @param theTypeId the type id to get information for
+	 * @return the type information, or null if not found
+	 * @throws InterruptedException thrown if thread was interrupted
+	 */
+	public IdType getType( int theTypeId ) throws InterruptedException {
+		Preconditions.checkArgument( theTypeId >= 0, "need a type id greater than 0" );
+		
+		if( !cacheExpiration.isAfter( LocalDateTime.now() ) ) {
+			fetchTypes( ); // TODO: we aren't serving stale, we wait,but we could serve stale and background load
+		}
+		return idTypesById.get( theTypeId );
+	}
+	
+	/**
+	 * Helper method that grabs and caches all the type information
+	 * @throws InterruptedException thrown if thread was interrupted
+	 */
+	private void fetchTypes( ) throws InterruptedException {
+		synchronized( this.idTypeLock ) {
+			ResourceResult<List<IdType>> result = client.getTypes();
+			
+			if( result.getStatus().getCode( ).isSuccess() ) {
+				for( IdType type : result.getResult()) {
+					idTypesByName.put( type.getName(),  type );
+					idTypesById.put( type.getId(),  type );
+				}
+				// TODO: set the cache expiration properly, shoudl be based on the result from the server
+				cacheExpiration = LocalDateTime.now( ).plusDays( 1 );
+				
+			} else {
+				// TODO: the above doesn't handle errors from the server
+				//       500 level errors we should throw back
+				//       400 level errors we should throw an IllegalArgument, if we can tell it is our type
+				//       200 level is fine
+				throw new CommunicationException( String.format( 
+						"Ran into trouble, '%s', trying to get type information", 
+						result.getStatus().getCode( ) ) );
+			}
+		}
+	}
+	
 
 	/**
 	 * Forces to manage to evaluate whether there are a enough values for a given type
@@ -103,29 +171,29 @@ public class ObjectIdManager {
 		Preconditions.checkArgument( !Strings.isNullOrEmpty( theTypeName ), "need a type name to prepare" );
 		
 		ObjectIdGenerator generator = generators.get( theTypeName );
-		ResourceResult<IdBlock> response = null;
+		ResourceResult<IdBlock> result = null;
 
 		if( generator == null ) {
 			// if we don't have a generator we create some ids and
 			// later use the result to create and save the generator
-			response = client.generateIds( theTypeName, requestSize );
+			result = client.generateIds( theTypeName, requestSize );
 			
 		} else if( generator.getAvailableValues() <= requestThreshold ) {
 			// we also generate ids if we are within threshold, we 
 			// could collapse code here, but we may be putting in 
 			// more logic in these two cases
-			response = client.generateIds( theTypeName, requestSize );
+			result = client.generateIds( theTypeName, requestSize );
 		}
 		
-		if( response != null ) { 
-			if( response.getStatus().getCode().isSuccess( ) ) {
+		if( result != null ) { 
+			if( result.getStatus().getCode().isSuccess( ) ) {
 				// if the generator is null then we didn't create/save
 				// locally so we have to do that
 				if( generator == null ) {
-					generator = new ObjectIdGenerator( theTypeName, response.getResult().getTypeId() );
+					generator = new ObjectIdGenerator( theTypeName, result.getResult().getTypeId() );
 					generators.put( theTypeName, generator );
 				}
-				generator.addValues( response.getResult() );
+				generator.addValues( result.getResult() );
 
 			} else {
 				// TODO: the above doesn't handle errors from the server
@@ -134,7 +202,7 @@ public class ObjectIdManager {
 				//       200 level is fine
 				throw new CommunicationException( String.format( 
 						"Ran into trouble, '%s', trying to increase values for ObjectIds of type '%s'", 
-						response.getStatus().getCode(), 
+						result.getStatus().getCode(), 
 						theTypeName ) );
 			}
 		}
