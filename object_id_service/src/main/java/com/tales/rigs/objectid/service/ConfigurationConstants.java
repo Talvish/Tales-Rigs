@@ -24,6 +24,9 @@ class ConfigurationConstants {
 	public static final String HOSTNAME = "id_source.hostname";
 	public static final String SOURCE_ID_FORMAT = "id_source.%s.source_id"; // this takes the hostname
 	
+	public static final String MAXIMUM_CACHE_AGE = "id_source.maximum_cache_age";
+	public static final int MAXIMUM_CACHE_AGE_DEFAULT = 86400;
+	
 	public static final String DATA_DIRECTORY = "id_source.data_directory";
 	public static final String SUPPORTED_TYPES = "id_source.types";
 	public static final String TYPE_DETAILS_FORMAT = SUPPORTED_TYPES + ".%s";

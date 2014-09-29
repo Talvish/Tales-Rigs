@@ -55,6 +55,8 @@ public class ObjectIdEngine {
 
 	private final File dataDirectory;
 	private final long sourceId;
+	
+	private final int maximumCacheAge;
 
 	// the following variables are volatile since they can 
 	// change over the in-memory life-time as new are added
@@ -80,8 +82,12 @@ public class ObjectIdEngine {
 		Preconditions.checkArgument( loadedSourceId != null, "The source id from configuration must be set." );
 		sourceId = loadedSourceId;
 		Preconditions.checkArgument( sourceId > 0, "The source id from configuration must be greater than zero." );
-
+		
 		logger.info( "Service is using id source hostname '{}' which is source id '{}'.", hostname, sourceId );
+
+		// get the caching age
+		maximumCacheAge = configurationManager.getIntegerValue( ConfigurationConstants.MAXIMUM_CACHE_AGE, ConfigurationConstants.MAXIMUM_CACHE_AGE_DEFAULT);
+		logger.info( "Service allows type caching for up to {} seconds.", maximumCacheAge );
 
 		// now we get the data directory and make sure it exists
 		dataDirectory = new File( configurationManager.getStringValue( ConfigurationConstants.DATA_DIRECTORY ) );
@@ -95,6 +101,16 @@ public class ObjectIdEngine {
 		}
 
 		processTypes( false );
+	}
+	
+	/**
+	 * The allows maximum age for caches of type information.
+	 * This doesn't impact blocks since once allocated nothing
+	 * will ever attempt to use the values.
+	 * @return the maximum cache age clients may used
+	 */
+	public int getMaximumCacheAge( ) {
+		return this.maximumCacheAge;
 	}
 	
 	/**

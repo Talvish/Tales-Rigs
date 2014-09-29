@@ -20,6 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.tales.businessobjects.ObjectId;
@@ -33,6 +36,8 @@ import com.tales.communication.CommunicationException;
  *
  */
 public class ObjectIdManager {
+	private static final Logger logger = LoggerFactory.getLogger( ObjectIdManager.class );
+
 	private final Map<String,ObjectIdGenerator> generators = new HashMap<String,ObjectIdGenerator>( ); 
 	private final long requestSize;
 	private final long requestThreshold;
@@ -41,7 +46,7 @@ public class ObjectIdManager {
 	private final Map<String,IdType> idTypesByName = new HashMap<String,IdType>( );
 	private final Map<Integer,IdType> idTypesById = new HashMap<Integer, IdType>( );
 	private final Object idTypeLock = new Object();
-	private LocalDateTime cacheExpiration = LocalDateTime.now(); // TODO: we need to do this and look at how we are serving/updating these values
+	private volatile LocalDateTime cacheExpiration = LocalDateTime.now(); 
 	
 	// TODO: add async handling, which will be part of internalPrepare and may impact generateObjectId
 	//       (e.g. force requests, or what if some are outstanding, etc)
@@ -122,8 +127,14 @@ public class ObjectIdManager {
 					idTypesByName.put( type.getName(),  type );
 					idTypesById.put( type.getId(),  type );
 				}
-				// TODO: set the cache expiration properly, shoudl be based on the result from the server
-				cacheExpiration = LocalDateTime.now( ).plusDays( 1 );
+				LocalDateTime calculatedExpiration = result.calculateExpiration( );
+				if( calculatedExpiration != null  ) {
+					cacheExpiration = calculatedExpiration;
+				} else {
+					cacheExpiration = LocalDateTime.now( ).plusMinutes( 5l ); // at least make it cache for a few minutes
+				}
+				
+				logger.info( "Retrieved {} types from the service and caching results until {}", idTypesByName.size(), cacheExpiration );
 				
 			} else {
 				// TODO: the above doesn't handle errors from the server
