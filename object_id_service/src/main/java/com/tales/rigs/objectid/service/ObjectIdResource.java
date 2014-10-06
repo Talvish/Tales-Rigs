@@ -28,7 +28,7 @@ import com.tales.contracts.services.http.ResourceResult;
 import com.tales.system.Conditions;
 
 /**
- * HTTP resource contract for generated ids for client services.
+ * HTTP resource contract for generating ids for client services.
  * @author Joseph Molnar
  *
  */

@@ -21,13 +21,7 @@ import com.tales.services.http.HttpService;
 import com.tales.system.configuration.PropertySource;
 
 /**
- * The is an example of a user service that is built using many of the patterns
- * I've tried to use when building up service while taking advantage of the
- * capabilities of the tales framework.
- * This is nearly a fully working sample. While it runs, it currently does not
- * do any real persistence.
- * <br>
- * For browsing samples, this should the LAST to look at.
+ * This is the main service class / entry point for the Object Id service.
  * @author Joseph Molnar
  *
  */
