@@ -41,6 +41,16 @@ public class IdType extends TimestampedBase {
 	private final File file;
 	
 	/**
+	 * If we add status we would add
+	 * Last Request Time
+	 * Average Block Size
+	 * Total Requested
+	 * Request Rate 
+	 */
+	
+
+	
+	/**
 	 * Constructor used for serialization.
 	 */
 	protected IdType( ) {

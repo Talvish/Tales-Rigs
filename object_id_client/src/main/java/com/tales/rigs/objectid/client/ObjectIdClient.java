@@ -62,7 +62,7 @@ public class ObjectIdClient extends ResourceClient {
 		
 		this.methods[ 0 ] = this.defineMethod( "setup_types", Void.class, HttpVerb.POST, "types/setup" );
 
-		this.methods[ 1 ] = this.defineMethod( "get_id_types", idTypesField.getType(), idTypesField.getGenericType( ), HttpVerb.GET, "types" );
+		this.methods[ 1 ] = this.defineMethod( "get_id_types", idTypesField.getGenericType( ), HttpVerb.GET, "types" );
 
 		this.methods[ 2 ] = this.defineMethod( "get_id_type_by_id", IdType.class, HttpVerb.GET, "types/{type_id}" )
 				.definePathParameter( "type_id", Integer.class );
