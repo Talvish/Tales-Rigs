@@ -15,50 +15,32 @@
 // ***************************************************************************
 package com.tales.rigs.objectid.service;
 
-import com.google.common.base.Strings;
+import com.tales.services.StandardService;
 import com.tales.services.http.HttpInterface;
-import com.tales.services.http.HttpService;
-import com.tales.system.configuration.PropertySource;
+import com.tales.services.http.ServiceConstants;
 
 /**
- * This is the main service class / entry point for the Object Id service.
+ * The main class for the service, which sets up the engine
+ * and binds the engine to the resource and the resource to
+ * a particular path.
  * @author Joseph Molnar
  *
  */
-public class ObjectIdService extends HttpService {
+public class ObjectIdService extends StandardService {
 	private ObjectIdEngine engine;
 
-	protected ObjectIdService( ) {
+	public ObjectIdService( ) {
 		super( "object_id_service", "Object Id Service", "A service that generates object ids for other service." );
 	}
-	
-	@Override
-	protected void onInitializeConfiguration() {
-		String filename = this.getConfigurationManager( ).getStringValue( "settings.file", null ); // get a config filename	 from command-line, if available
-		
-		if( !Strings.isNullOrEmpty( filename ) ) {
-			this.getConfigurationManager( ).addSource( new PropertySource( filename) );
-		}
-	};
 	
 	@Override
 	protected void onStart() {
 		super.onStart();
 		
-		HttpInterface httpInterface = new HttpInterface( "internal", this );		
-		this.interfaceManager.register( httpInterface );
-		
 		engine = new ObjectIdEngine( this.getConfigurationManager( ) );
-		httpInterface.bind( new ObjectIdResource( engine ), "/id" );
+		this.interfaceManager.getInterface( ServiceConstants.INTERNAL_INTERFACE_NAME, HttpInterface.class ).bind( new ObjectIdResource( engine ), "/id" );
+
 		// TODO: add status, it would be nice to track the total number of ids generated for the different types
 		//this.statusManager.register( "object_id_engine_status", engine.getStatus( ) );
-	}
-	
-    public static void main( String[ ] args ) throws Exception {
-    	ObjectIdService service = new ObjectIdService( );
-    	
-    	service.start( args );
-    	service.run( );
-    	service.stop( );
 	}
 }
