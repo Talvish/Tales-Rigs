@@ -15,7 +15,7 @@
 // ***************************************************************************
 package com.tales.rigs.objectid.service;
 
-import com.tales.services.StandardService;
+import com.tales.services.Service;
 import com.tales.services.http.HttpInterface;
 import com.tales.services.http.ServiceConstants;
 
@@ -26,7 +26,7 @@ import com.tales.services.http.ServiceConstants;
  * @author Joseph Molnar
  *
  */
-public class ObjectIdService extends StandardService {
+public class ObjectIdService extends Service {
 	private ObjectIdEngine engine;
 
 	public ObjectIdService( ) {
