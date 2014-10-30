@@ -81,7 +81,7 @@ public class ObjectIdClient extends ResourceClient {
 	 * @throws InterruptedException thrown if the calling thread is interrupted
 	 */
 	public ResourceResult<Void> setupTypes( ) throws InterruptedException {
-		return this.createRequest( this.methods[ 0 ] ).execute();
+		return this.createRequest( this.methods[ 0 ] ).call();
 	}
 	
 	/**
@@ -90,7 +90,7 @@ public class ObjectIdClient extends ResourceClient {
 	 * @throws InterruptedException thrown if the calling thread is interrupted
 	 */
 	public ResourceResult<List<IdType>> getTypes( ) throws InterruptedException {
-		return this.createRequest( this.methods[ 1 ] ).execute();
+		return this.createRequest( this.methods[ 1 ] ).call();
 	}
 	
 	/**
@@ -102,8 +102,7 @@ public class ObjectIdClient extends ResourceClient {
 	public ResourceResult<IdType> getType( int theTypeId ) throws InterruptedException { 
 		Conditions.checkParameter( theTypeId > 0, "the type id must be greater than 0" );
 		
-		return this.createRequest( this.methods[ 2 ], theTypeId )
-				.execute();
+		return this.createRequest( this.methods[ 2 ], theTypeId ).call();
 	}
 
 	/**
@@ -115,8 +114,7 @@ public class ObjectIdClient extends ResourceClient {
 	public ResourceResult<IdType> getType( String theTypeName ) throws InterruptedException { 
 		Conditions.checkParameter( !Strings.isNullOrEmpty( theTypeName ), "the type name must be given" );
 		
-		return this.createRequest( this.methods[ 3 ], theTypeName )
-				.execute();
+		return this.createRequest( this.methods[ 3 ], theTypeName ).call();
 	}
 
 	/**
@@ -131,6 +129,6 @@ public class ObjectIdClient extends ResourceClient {
 
 		return this.createRequest( this.methods[ 4 ], theTypeName )
 				.setBodyParameter( "amount", theAmount )
-				.execute();
+				.call();
 	}
 }
