@@ -13,18 +13,18 @@
 // *  See the License for the specific language governing permissions and
 // *  limitations under the License.
 // ***************************************************************************
-package com.tales.rigs.objectid.client;
+package com.talvish.tales.rigs.objectid.client;
 
 import java.lang.reflect.Field;
 import java.util.List;
 
 import com.google.common.base.Strings;
 
-import com.tales.client.http.ResourceClient;
-import com.tales.client.http.ResourceMethod;
-import com.tales.client.http.ResourceResult;
-import com.tales.communication.HttpVerb;
-import com.tales.system.Conditions;
+import com.talvish.tales.client.http.ResourceClient;
+import com.talvish.tales.client.http.ResourceMethod;
+import com.talvish.tales.client.http.ResourceResult;
+import com.talvish.tales.communication.HttpVerb;
+import com.talvish.tales.system.Conditions;
 
 /**
  * The client for talking to the ObjectIdService. The client is 

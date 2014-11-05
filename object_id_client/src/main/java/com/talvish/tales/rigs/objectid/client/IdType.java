@@ -13,11 +13,11 @@
 // *  See the License for the specific language governing permissions and
 // *  limitations under the License.
 // ***************************************************************************
-package com.tales.rigs.objectid.client;
+package com.talvish.tales.rigs.objectid.client;
 
-import com.tales.businessobjects.TimestampedBase;
-import com.tales.contracts.data.DataContract;
-import com.tales.contracts.data.DataMember;
+import com.talvish.tales.businessobjects.TimestampedBase;
+import com.talvish.tales.contracts.data.DataContract;
+import com.talvish.tales.contracts.data.DataMember;
 
 /**
  * The information for a particular type.

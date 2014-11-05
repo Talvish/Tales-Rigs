@@ -13,19 +13,20 @@
 // *  See the License for the specific language governing permissions and
 // *  limitations under the License.
 // ***************************************************************************
-package com.tales.rigs.objectid.service;
+package com.talvish.tales.rigs.objectid.service;
 
 import java.util.List;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import com.tales.communication.Status;
-import com.tales.contracts.services.http.PathParam;
-import com.tales.contracts.services.http.RequestParam;
-import com.tales.contracts.services.http.ResourceContract;
-import com.tales.contracts.services.http.ResourceOperation;
-import com.tales.contracts.services.http.ResourceResult;
-import com.tales.system.Conditions;
+
+import com.talvish.tales.communication.Status;
+import com.talvish.tales.contracts.services.http.PathParam;
+import com.talvish.tales.contracts.services.http.RequestParam;
+import com.talvish.tales.contracts.services.http.ResourceContract;
+import com.talvish.tales.contracts.services.http.ResourceOperation;
+import com.talvish.tales.contracts.services.http.ResourceResult;
+import com.talvish.tales.system.Conditions;
 
 /**
  * HTTP resource contract for generating ids for client services.

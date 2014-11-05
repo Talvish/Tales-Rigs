@@ -13,10 +13,11 @@
 // *  See the License for the specific language governing permissions and
 // *  limitations under the License.
 // ***************************************************************************
-package com.tales.rigs.objectid.client;
+package com.talvish.tales.rigs.objectid.client;
 
 import com.google.common.base.Preconditions;
-import com.tales.client.http.ResourceResult;
+
+import com.talvish.tales.client.http.ResourceResult;
 
 // TODO: need to figure out how to provide help on the response when it comes to 
 public class ResultHelper {

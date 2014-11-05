@@ -13,7 +13,7 @@
 // *  See the License for the specific language governing permissions and
 // *  limitations under the License.
 // ***************************************************************************
-package com.tales.rigs.objectid.client;
+package com.talvish.tales.rigs.objectid.client;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -25,9 +25,10 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import com.tales.businessobjects.ObjectId;
-import com.tales.client.http.ResourceResult;
-import com.tales.communication.CommunicationException;
+
+import com.talvish.tales.businessobjects.ObjectId;
+import com.talvish.tales.client.http.ResourceResult;
+import com.talvish.tales.communication.CommunicationException;
 
 /**
  * This class is used to generate actual ObjectIds.

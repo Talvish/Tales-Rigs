@@ -13,13 +13,10 @@
 // *  See the License for the specific language governing permissions and
 // *  limitations under the License.
 // ***************************************************************************
-package com.tales.rigs.objectid.service;
+package com.talvish.tales.rigs.objectid.client;
 
-import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
-import com.tales.contracts.data.DataContract;
-import com.tales.contracts.data.DataMember;
-
+import com.talvish.tales.contracts.data.DataContract;
+import com.talvish.tales.contracts.data.DataMember;
 
 /**
  * The block describing a set of values that 
@@ -39,28 +36,6 @@ public class IdBlock {
 	 * A constructor to use for serialization.
 	 */
 	protected IdBlock( ) {
-	}
-	
-	/**
-	 * The primary constructor used for generating a block.
-	 * @param theSourceId the source that generated the block
-	 * @param theTypeName the name of the type that the id was created for
-	 * @param theTypeId the type id to use for object ids created from the block
-	 * @param theStartValue the starting value for the block of ids that can be created
-	 * @param theEndValue the ending value for the block of ids that can be created
-	 */
-	public IdBlock( long theSourceId, String theTypeName, int theTypeId, long theStartValue, long theEndValue ) {
-		Preconditions.checkArgument( theSourceId > 0, "the source id must be greater than 0" );
-		Preconditions.checkArgument( !Strings.isNullOrEmpty( theTypeName ), "the type name must not be null" );
-		Preconditions.checkArgument( theTypeId > 0, "the type id must be greater than 0 for type '%s'", theTypeName );
-		Preconditions.checkArgument( theStartValue > 0, "the start value must be greater than 0 for type '%s'", theTypeName );
-		Preconditions.checkArgument( theEndValue >= theStartValue, "the end value, %s, must be greater than the start value, %s, for type '%s'", theTypeName, theStartValue, theEndValue );
-
-		sourceId = theSourceId;
-		typeId = theTypeId;
-		startValue = theStartValue;
-		endValue = theEndValue;
-		typeName = theTypeName;
 	}
 	
 	/**

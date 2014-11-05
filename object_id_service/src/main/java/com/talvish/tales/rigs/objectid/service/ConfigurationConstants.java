@@ -13,7 +13,7 @@
 // *  See the License for the specific language governing permissions and
 // *  limitations under the License.
 // ***************************************************************************
-package com.tales.rigs.objectid.service;
+package com.talvish.tales.rigs.objectid.service;
 
 /**
  * Constants used by the ObjectId Service.

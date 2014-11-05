@@ -13,7 +13,7 @@
 // *  See the License for the specific language governing permissions and
 // *  limitations under the License.
 // ***************************************************************************
-package com.tales.rigs.objectid.service;
+package com.talvish.tales.rigs.objectid.service;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,10 +30,11 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import com.tales.parts.naming.NameManager;
-import com.tales.parts.naming.NameValidator;
-import com.tales.parts.naming.SegmentedLowercaseEntityNameValidator;
-import com.tales.system.configuration.ConfigurationManager;
+
+import com.talvish.tales.parts.naming.NameManager;
+import com.talvish.tales.parts.naming.NameValidator;
+import com.talvish.tales.parts.naming.SegmentedLowercaseEntityNameValidator;
+import com.talvish.tales.system.configuration.ConfigurationManager;
 
 /**
  * The engine for generating ids for ObjectIds.

@@ -13,11 +13,11 @@
 // *  See the License for the specific language governing permissions and
 // *  limitations under the License.
 // ***************************************************************************
-package com.tales.rigs.objectid.service;
+package com.talvish.tales.rigs.objectid.service;
 
-import com.tales.services.Service;
-import com.tales.services.http.HttpInterface;
-import com.tales.services.http.ServiceConstants;
+import com.talvish.tales.services.Service;
+import com.talvish.tales.services.http.HttpInterface;
+import com.talvish.tales.services.http.ServiceConstants;
 
 /**
  * The main class for the service, which sets up the engine

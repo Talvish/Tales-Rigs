@@ -13,14 +13,15 @@
 // *  See the License for the specific language governing permissions and
 // *  limitations under the License.
 // ***************************************************************************
-package com.tales.rigs.objectid.client;
+package com.talvish.tales.rigs.objectid.client;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-import com.tales.businessobjects.ObjectId;
+
+import com.talvish.tales.businessobjects.ObjectId;
 
 /**
  * A class that manages and caches available values for the a 
