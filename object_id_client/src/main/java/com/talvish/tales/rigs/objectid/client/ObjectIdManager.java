@@ -84,6 +84,18 @@ public class ObjectIdManager {
 	public ObjectId generateObjectId( String theTypeName ) throws InterruptedException {
 		return internalPrepare( theTypeName ).generateObjectId( ); // this will validate the name
 	}
+
+	/**
+	 * Gets type information for the type that is in the object id.
+	 * @param theId the id to get the type information for
+	 * @return the type information, or null if not found
+	 * @throws InterruptedException thrown if thread was interrupted
+	 */
+	public IdType getType( ObjectId theId ) throws InterruptedException {
+		Preconditions.checkNotNull( theId, "need an object id" );
+	
+		return getType( theId.getTypeId( ) );
+	}
 	
 	/**
 	 * Gets type information by the type name.

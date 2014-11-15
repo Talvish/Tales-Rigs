@@ -30,7 +30,7 @@ public class ObjectIdService extends Service {
 	private ObjectIdEngine engine;
 
 	public ObjectIdService( ) {
-		super( "com.talvish.tales.rigs.objectid.service", "Object Id Service", "A service that generates object ids for other service." );
+		super( "object_id_service", "Object Id Service", "A service that generates object ids for other service." );
 	}
 	
 	@Override
