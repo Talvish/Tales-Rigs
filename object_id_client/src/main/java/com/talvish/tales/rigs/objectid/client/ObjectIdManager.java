@@ -40,7 +40,7 @@ public class ObjectIdManager {
 	private static final Logger logger = LoggerFactory.getLogger( ObjectIdManager.class );
 
 	private final Map<String,ObjectIdGenerator> generators = new HashMap<String,ObjectIdGenerator>( ); 
-	private final long requestSize;
+	private final long requestAmount;
 	private final long requestThreshold;
 	private final ObjectIdClient client;
 	
@@ -55,22 +55,16 @@ public class ObjectIdManager {
 	
 	/**
 	 * Constructor taking the required elements to work
-	 * @param theRequestSize the number of values that will be requested from the service whenever a new set of values are needed
-	 * @param theRequestThreshold when there are this number of unused values for a type it will request for more values from the service
-	 * @param theServiceEndpoint the endpoint where the object id service is located
 	 * @param theUserAgent the user agent to use when communicating with other services
 	 */
-	public ObjectIdManager( long theRequestSize, long theRequestThreshold, String theServiceEndpoint, String theUserAgent ) {
-		Preconditions.checkArgument( theRequestSize > 0, "the request size must be greater than 0" );
-		Preconditions.checkArgument( theRequestThreshold > 0, "the request threshold must be greater than 0" );
-		Preconditions.checkArgument( theRequestThreshold <= theRequestSize, "the request size, %s, should be at least the same size is the theshold, %s, and ideally bigger", theRequestSize, theRequestThreshold );
-		Preconditions.checkArgument( !Strings.isNullOrEmpty( theServiceEndpoint ), "the service endpoint must be specified" );
+	public ObjectIdManager( ObjectIdConfiguration theConfiguration, String theUserAgent ) {
+		Preconditions.checkNotNull( theConfiguration, "need the configuration" );
 		Preconditions.checkArgument( !Strings.isNullOrEmpty( theUserAgent ), "the user agent must be specified" );
 		
-		requestSize = theRequestSize;
-		requestThreshold = theRequestThreshold;
+		requestAmount = theConfiguration.getRequestAmount();
+		requestThreshold = theConfiguration.getRequestThreshold();
 		
-		client = new ObjectIdClient( theServiceEndpoint, theUserAgent );
+		client = new ObjectIdClient( theConfiguration.getEndpoint(), theUserAgent );
 		
 		// TODO: consider starting a thread to get type information
 	}
@@ -200,13 +194,13 @@ public class ObjectIdManager {
 		if( generator == null ) {
 			// if we don't have a generator we create some ids and
 			// later use the result to create and save the generator
-			result = client.generateIds( theTypeName, requestSize );
+			result = client.generateIds( theTypeName, requestAmount );
 			
 		} else if( generator.getAvailableValues() <= requestThreshold ) {
 			// we also generate ids if we are within threshold, we 
 			// could collapse code here, but we may be putting in 
 			// more logic in these two cases
-			result = client.generateIds( theTypeName, requestSize );
+			result = client.generateIds( theTypeName, requestAmount );
 		}
 		
 		if( result != null ) { 
