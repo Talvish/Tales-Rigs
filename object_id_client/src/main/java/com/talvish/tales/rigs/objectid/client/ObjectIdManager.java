@@ -55,6 +55,7 @@ public class ObjectIdManager {
 	
 	/**
 	 * Constructor taking the required elements to work
+	 * @param theConfiguration the configuration to use to connect to the service and manage local caching
 	 * @param theUserAgent the user agent to use when communicating with other services
 	 */
 	public ObjectIdManager( ObjectIdConfiguration theConfiguration, String theUserAgent ) {
@@ -64,7 +65,7 @@ public class ObjectIdManager {
 		requestAmount = theConfiguration.getRequestAmount();
 		requestThreshold = theConfiguration.getRequestThreshold();
 		
-		client = new ObjectIdClient( theConfiguration.getEndpoint(), theUserAgent );
+		client = new ObjectIdClient( theConfiguration, theUserAgent );
 		
 		// TODO: consider starting a thread to get type information
 	}

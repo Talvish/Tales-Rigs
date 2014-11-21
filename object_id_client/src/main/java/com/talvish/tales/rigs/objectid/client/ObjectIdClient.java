@@ -40,11 +40,11 @@ public class ObjectIdClient extends ResourceClient {
     
     /**
      * The constructor required to create a client.
-     * @param theEndpoint the endpoint to find the service.
+     * @param theConfiguration the configuration to use to talk to the server.
      * @param theUserAgent the user agent to use while talking to the service
      */
-	public ObjectIdClient( String theEndpoint, String theUserAgent ) {
-		super( theEndpoint, "/id", "20141001", theUserAgent, true ); // we are allowing untrusted SSL since the sample self-cert'ed
+	public ObjectIdClient( ObjectIdConfiguration theConfiguration, String theUserAgent ) {
+		super( theConfiguration, "/id", "20141001", theUserAgent ); 
 
 		// we need to retrieve some type information using a bit of a hack
 		// due to Java's lack of full type information for generics

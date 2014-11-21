@@ -16,7 +16,8 @@
 package com.talvish.tales.rigs.objectid.client;
 
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
+
+import com.talvish.tales.client.http.ResourceConfiguration;
 import com.talvish.tales.system.configuration.ConfigurationManager;
 
 /**
@@ -24,8 +25,7 @@ import com.talvish.tales.system.configuration.ConfigurationManager;
  * @author jmolnar
  *
  */
-public class ObjectIdConfiguration {
-	private String endpoint;
+public class ObjectIdConfiguration extends ResourceConfiguration {
 	private long requestAmount;
 	private long thresholdAmount;
 	
@@ -36,22 +36,13 @@ public class ObjectIdConfiguration {
 	 * @param theRequestThreshold when there are this number of unused values for a type it will request for more values from the service
 	 */
 	public ObjectIdConfiguration( String theEndpoint, long theRequestAmount, long theRequestThreshold ) {
-		Preconditions.checkArgument( !Strings.isNullOrEmpty( theEndpoint ), "need an endpoint" );
+		super( theEndpoint, false );
 		Preconditions.checkArgument( theRequestAmount > 0, "the request amount has to be greater than zero" );
 		Preconditions.checkArgument( theRequestThreshold > 0, "the threshold amount has to be greater than zero" );
 		Preconditions.checkArgument( theRequestAmount > theRequestThreshold, "the request amount '%s' has to be greater than the threshold amount '%s'", theRequestAmount, theRequestThreshold );
 		
-		endpoint = theEndpoint;
 		requestAmount = theRequestAmount;
 		thresholdAmount = theRequestThreshold;
-	}
-	
-	/**
-	 * The endpoint for the object id service.
-	 * @return the endpoing for the object id service
-	 */
-	public String getEndpoint( ) {
-		return endpoint;
 	}
 	
 	/**
@@ -69,6 +60,8 @@ public class ObjectIdConfiguration {
 	public long getRequestThreshold( ) {
 		return thresholdAmount;
 	}
+	
+	
 
 	public static final String SERVICE_NAME					= "object_id_service";
 	
