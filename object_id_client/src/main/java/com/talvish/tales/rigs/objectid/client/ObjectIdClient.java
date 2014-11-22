@@ -15,15 +15,14 @@
 // ***************************************************************************
 package com.talvish.tales.rigs.objectid.client;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import com.google.common.base.Strings;
-
 import com.talvish.tales.client.http.ResourceClient;
 import com.talvish.tales.client.http.ResourceMethod;
 import com.talvish.tales.client.http.ResourceResult;
 import com.talvish.tales.communication.HttpVerb;
+import com.talvish.tales.parts.reflection.TypeUtility;
 import com.talvish.tales.system.Conditions;
 
 /**
@@ -48,21 +47,21 @@ public class ObjectIdClient extends ResourceClient {
 
 		// we need to retrieve some type information using a bit of a hack
 		// due to Java's lack of full type information for generics
-		Field idTypesField = null;
-		try {
-			idTypesField = this.getClass().getDeclaredField( "idTypes" );
-		} catch (NoSuchFieldException e) {
-			throw new IllegalStateException( "Could not create the client due to an issue getting the the field needed for retrieving type information.", e );
-		} catch (SecurityException e) {
-			throw new IllegalStateException( "Could not create the client due to a security issue getting the the field needed for retrieving type information.", e );
-		}
+//		Field idTypesField = null;
+//		try {
+//			idTypesField = this.getClass().getDeclaredField( "idTypes" );
+//		} catch (NoSuchFieldException e) {
+//			throw new IllegalStateException( "Could not create the client due to an issue getting the the field needed for retrieving type information.", e );
+//		} catch (SecurityException e) {
+//			throw new IllegalStateException( "Could not create the client due to a security issue getting the the field needed for retrieving type information.", e );
+//		}
 		
 		// we now define the methods that we are going to expose for calling
 		this.methods = new ResourceMethod[ 5 ];
 		
 		this.methods[ 0 ] = this.defineMethod( "setup_types", Void.class, HttpVerb.POST, "types/setup" );
 
-		this.methods[ 1 ] = this.defineMethod( "get_id_types", idTypesField.getGenericType( ), HttpVerb.GET, "types" );
+		this.methods[ 1 ] = this.defineMethod( "get_id_types", TypeUtility.extractFieldType( this.getClass( ), "idTypes" ), HttpVerb.GET, "types" );
 
 		this.methods[ 2 ] = this.defineMethod( "get_id_type_by_id", IdType.class, HttpVerb.GET, "types/{type_id}" )
 				.definePathParameter( "type_id", Integer.class );

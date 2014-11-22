@@ -26,8 +26,8 @@ import com.talvish.tales.system.configuration.ConfigurationManager;
  *
  */
 public class ObjectIdConfiguration extends ResourceConfiguration {
-	private long requestAmount;
-	private long thresholdAmount;
+	private final long requestAmount;
+	private final long thresholdAmount;
 	
 	/**
 	 * Constructor for the needed configuration.
