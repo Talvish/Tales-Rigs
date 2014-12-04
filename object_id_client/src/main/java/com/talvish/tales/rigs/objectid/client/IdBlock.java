@@ -24,7 +24,7 @@ import com.talvish.tales.contracts.data.DataMember;
  * @author jmolnar
  *
  */
-@DataContract( name ="com.tales.service.id_block")
+@DataContract( name ="com.talvish.tales.object_id.id_block")
 public class IdBlock {
 	@DataMember( name="type_name")private String typeName;
 	@DataMember( name="type_id" )private int typeId;

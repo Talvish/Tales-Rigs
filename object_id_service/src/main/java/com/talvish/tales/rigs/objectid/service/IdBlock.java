@@ -17,7 +17,6 @@ package com.talvish.tales.rigs.objectid.service;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-
 import com.talvish.tales.contracts.data.DataContract;
 import com.talvish.tales.contracts.data.DataMember;
 
@@ -28,7 +27,7 @@ import com.talvish.tales.contracts.data.DataMember;
  * @author jmolnar
  *
  */
-@DataContract( name ="com.tales.service.id_block")
+@DataContract( name ="com.talvish.tales.object_id.id_block")
 public class IdBlock {
 	@DataMember( name="type_name")private String typeName;
 	@DataMember( name="type_id" )private int typeId;

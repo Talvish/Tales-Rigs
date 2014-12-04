@@ -24,7 +24,7 @@ import com.talvish.tales.contracts.data.DataMember;
  * @author jmolnar
  *
  */
-@DataContract( name ="com.tales.service.id_type")
+@DataContract( name ="com.talvish.tales.object_id.id_type")
 public class IdType extends TimestampedBase {
 	@DataMember( name="name")private String name;
 	@DataMember( name="description" )private String description;
