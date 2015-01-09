@@ -171,7 +171,6 @@ public class ObjectIdEngine {
 		}
 		return idBlock;
 	}
-	
 
 	/**
 	 * This method is called to have a look at the config information

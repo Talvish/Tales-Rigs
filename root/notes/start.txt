@@ -1,0 +1,2 @@
+# this shows how to start (uses the development profile)
+java -jar tales.rigs.object_id_service-0.5.0-SNAPSHOT.jar -settings.file=config\settings.json -settings.profile=development -settings.block=object_id_service -id_source.hostname=localhost
