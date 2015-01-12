@@ -62,16 +62,24 @@
 					"settings" : [
 						{
 							"name" : "id_source.types",
-							"value" : "user,device",
+							"value" : "user_account, user_profile, email_address_access, password_access",
 							"description" : "The types this service will generate object ids for."
 						},{
-							"name" : "id_source.types.user",
-							"value" : "[id,1][name,user][description,Represents a user in the system]",
-							"description" : "The type details for user."
+							"name" : "id_source.types.user_account",
+							"value" : "[id,1][name,user_account][description,Represents a user account in the system.]",
+							"description" : "The type details for a user account."
 						},{
-							"name" : "id_source.types.device",
-							"value" : "[id,2][name,device][description,Represents a device that belongs to a user]",
-							"description" : "The type details for device."
+							"name" : "id_source.types.user_profile",
+							"value" : "[id,2][name,user_profile][description,Represents a user profile in the system.]",
+							"description" : "The type details for a user profile."
+						},{
+							"name" : "id_source.types.email_address_access",
+							"value" : "[id,11][name,email_address_access][description,Represents email address information for an an account.]",
+							"description" : "The type details for email address access.."
+						},{
+							"name" : "id_source.types.password_access",
+							"value" : "[id,20][name,password_access][description,Represents password information for an an account.]",
+							"description" : "The type details for a password access."
 						}
 					]
 				},	

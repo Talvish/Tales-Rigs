@@ -272,7 +272,7 @@ public class ObjectIdEngine {
 				// file doesn't exist, but we can set it up so we need to ...
 				
 				// first, create the file ...
-				logger.info( "Creating file '{}' for type '{}' and setting last value to 0.", typeFile.toString( ) );
+				logger.info( "Creating file '{}' for type '{}' and setting last value to 0.", typeFile.toString( ), typeName );
 				boolean fileCreated;
 				try {
 					fileCreated = typeFile.createNewFile();
