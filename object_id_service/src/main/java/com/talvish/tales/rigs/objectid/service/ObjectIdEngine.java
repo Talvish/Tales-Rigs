@@ -30,10 +30,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
-
 import com.talvish.tales.parts.naming.NameManager;
 import com.talvish.tales.parts.naming.NameValidator;
-import com.talvish.tales.parts.naming.SegmentedLowercaseEntityNameValidator;
+import com.talvish.tales.parts.naming.SegmentedLowercaseValidator;
 import com.talvish.tales.system.configuration.ConfigurationManager;
 
 /**
@@ -48,7 +47,7 @@ public class ObjectIdEngine {
 	
 	static {
 		if( !NameManager.hasValidator( ObjectIdEngine.TYPE_NAME_VALIDATOR ) ) {
-			NameManager.setValidator( ObjectIdEngine.TYPE_NAME_VALIDATOR, new SegmentedLowercaseEntityNameValidator() );
+			NameManager.setValidator( ObjectIdEngine.TYPE_NAME_VALIDATOR, new SegmentedLowercaseValidator() );
 		}
 	}
 	
