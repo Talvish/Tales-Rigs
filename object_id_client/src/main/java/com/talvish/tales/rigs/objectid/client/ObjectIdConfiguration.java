@@ -15,34 +15,29 @@
 // ***************************************************************************
 package com.talvish.tales.rigs.objectid.client;
 
-import com.google.common.base.Preconditions;
-
-import com.talvish.tales.client.http.ResourceConfiguration;
-import com.talvish.tales.system.configuration.ConfigurationManager;
+import com.talvish.tales.client.http.ResourceConfigurationBase;
+import com.talvish.tales.system.Conditions;
+import com.talvish.tales.system.configuration.annotated.Setting;
+import com.talvish.tales.system.configuration.annotated.Settings;
 
 /**
  * The configuration needed to setup the object id manager to retrieving object ids locally.
  * @author jmolnar
  *
  */
-public class ObjectIdConfiguration extends ResourceConfiguration {
-	private final long requestAmount;
-	private final long thresholdAmount;
+@Settings( prefix="object_id_service" )
+public class ObjectIdConfiguration extends ResourceConfigurationBase<ObjectIdConfiguration> {
+	
+	@Setting( name="{prefix}.request_amount" )
+	private long requestAmount = 100;
+
+	@Setting( name="{prefix}.request_threshold" )
+	private long thresholdAmount = 20;
 	
 	/**
-	 * Constructor for the needed configuration.
-	 * @param theEndpoint the endpoint where the object id service is located
-	 * @param theRequestAmount the number of values that will be requested from the service whenever a new set of values are needed
-	 * @param theRequestThreshold when there are this number of unused values for a type it will request for more values from the service
+	 * Default constructor for serialization.
 	 */
-	public ObjectIdConfiguration( String theEndpoint, long theRequestAmount, long theRequestThreshold ) {
-		super( theEndpoint, false );
-		Preconditions.checkArgument( theRequestAmount > 0, "the request amount has to be greater than zero" );
-		Preconditions.checkArgument( theRequestThreshold > 0, "the threshold amount has to be greater than zero" );
-		Preconditions.checkArgument( theRequestAmount > theRequestThreshold, "the request amount '%s' has to be greater than the threshold amount '%s'", theRequestAmount, theRequestThreshold );
-		
-		requestAmount = theRequestAmount;
-		thresholdAmount = theRequestThreshold;
+	public ObjectIdConfiguration( ) {
 	}
 	
 	/**
@@ -51,6 +46,16 @@ public class ObjectIdConfiguration extends ResourceConfiguration {
 	 */
 	public long getRequestAmount( ) {
 		return requestAmount;
+	}
+
+	/**
+	 * Sets the number of ids that are requested at one time.
+	 * @param theAmount the number of ids to request at a time
+	 * @return the configuration object so setters can be chained
+	 */
+	public ObjectIdConfiguration setRequestAmount( long theAmount ) {
+		requestAmount = theAmount;
+		return this;
 	}
 	
 	/**
@@ -61,30 +66,23 @@ public class ObjectIdConfiguration extends ResourceConfiguration {
 		return thresholdAmount;
 	}
 	
-	
-
-	public static final String SERVICE_NAME					= "object_id_service";
-	
-	public static final String ENDPOINT_SETTING				= SERVICE_NAME + ".endpoint";
-	public static final String REQUEST_AMOUNT_SETTING		= SERVICE_NAME + ".request_amount";
-	public static final String REQUEST_THRESHOLD_SETTING	= SERVICE_NAME + ".request_threshold";
-
-	public static final long DEFAULT_REQUEST_AMOUNT			= 100;
-	public static final long DEFAULT_THRESHOLD_AMOUNT		= 20;
-
 	/**
-	 * Helper method that will look for and load configuration via the configuration manager.
-	 * @param theConfigurationManager the configuration manager to use to load the configuration
-	 * @return the loaded configuration
+	 * Sets the number of ids that must be in an id pool before a request is made to get more ids.
+	 * @param theThreshold the number of is in the pool before a request is made
+	 * @return the configuration object so setters can be chained
 	 */
-	public static ObjectIdConfiguration loadConfiguration( ConfigurationManager theConfigurationManager ) {
-    	String endpoint= theConfigurationManager.getStringValue( ENDPOINT_SETTING );
-    	long requestAmount = theConfigurationManager.getLongValue( 
-    			REQUEST_AMOUNT_SETTING,
-    			DEFAULT_REQUEST_AMOUNT );    	
-    	long requestThreshold = theConfigurationManager.getLongValue(
-    			REQUEST_THRESHOLD_SETTING,
-    			DEFAULT_THRESHOLD_AMOUNT );
+	public ObjectIdConfiguration setRequestThreshold( long theThreshold ) {
+		Conditions.checkConfiguration( theThreshold > 0, "the threshold amount has to be greater than zero" );
+		thresholdAmount = theThreshold;
+		return this;
+	}
 
-    	return new ObjectIdConfiguration( endpoint, requestAmount, requestThreshold );
-	}}
+
+	@Override
+	public void validate( ) {
+		super.validate( );
+		Conditions.checkConfiguration( requestAmount > 0, "the request amount has to be greater than zero" );
+		Conditions.checkConfiguration( thresholdAmount > 0, "the threshold amount has to be greater than zero" );
+		Conditions.checkConfiguration( requestAmount > thresholdAmount, "the request amount '%s' has to be greater than the threshold amount '%s'", requestAmount, thresholdAmount );
+	}
+}
