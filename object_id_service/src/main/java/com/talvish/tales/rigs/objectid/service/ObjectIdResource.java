@@ -76,12 +76,12 @@ public class ObjectIdResource {
 	 */
 	@ResourceOperation( name="get_id_type_by_id", path="GET : types/{type_id : [0-9]+}" ) // regex separates from below method, this must be a number
 	public ResourceResult<IdType> getType( @PathParam( name="type_id" )int theTypeId ) { 
-		Conditions.checkParameter( theTypeId > 0, "the type id must be greater than 0" );
+		Conditions.checkParameter( theTypeId > 0, "type_id", "the type id must be greater than 0" );
 
 		ResourceResult<IdType> result = new ResourceResult<IdType>( );
 		IdType idType = engine.getType( theTypeId );
 		
-		Conditions.checkFound( idType != null, "Could not find the type identified by the id '%s'.", theTypeId );
+		Conditions.checkFound( idType != null, "type_id", "Could not find the type identified by the id '%s'.", theTypeId );
 		
 		result.setResult( idType, Status.OPERATION_COMPLETED );;
 		result.setCachingEnabled( engine.getMaximumCacheAge( ) );
@@ -96,12 +96,12 @@ public class ObjectIdResource {
 	 */
 	@ResourceOperation( name="get_id_type_by_name", path="GET : types/{type_name : [a-zA-Z_].*}" ) // regex separates from above method, this must start with a letter or underscore
 	public ResourceResult<IdType> getType( @PathParam( name="type_name" )String theTypeName ) { 
-		Conditions.checkParameter( !Strings.isNullOrEmpty( theTypeName ), "the type name must not be null or empty" );
+		Conditions.checkParameter( !Strings.isNullOrEmpty( theTypeName ), "type_name", "the type name must not be null or empty" );
 		
 		ResourceResult<IdType> result = new ResourceResult<IdType>( );
 		IdType idType = engine.getType( theTypeName );
 		
-		Conditions.checkFound( idType != null, "Could not find the type identified by the name '%s'.", theTypeName );
+		Conditions.checkFound( idType != null, "type_name", "Could not find the type identified by the name '%s'.", theTypeName );
 
 		result.setResult( idType, Status.OPERATION_COMPLETED );;
 		result.setCachingEnabled( engine.getMaximumCacheAge( ) );
@@ -119,11 +119,11 @@ public class ObjectIdResource {
 	public IdBlock generateIds( 
 			@PathParam( name="type_name" )String theTypeName,
 			@RequestParam( name="amount")int theAmount ) { 
-		Conditions.checkParameter( !Strings.isNullOrEmpty( theTypeName ), "the type name must not be null or empty" );
-		Conditions.checkParameter( theAmount > 0, "the number of ids being requested must be greater than 0" );
+		Conditions.checkParameter( !Strings.isNullOrEmpty( theTypeName ), "type_name", "the type name must not be null or empty" );
+		Conditions.checkParameter( theAmount > 0, "amount", "the number of ids being requested must be greater than 0" );
 
 		IdBlock idBlock = engine.generateIds( theTypeName, theAmount);
-		Conditions.checkFound( idBlock != null, "Could not find the type identified by the name '%s'.", theTypeName );
+		Conditions.checkFound( idBlock != null, "type_name", "Could not find the type identified by the name '%s'.", theTypeName );
 				
 		return idBlock;
 	}

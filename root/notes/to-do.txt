@@ -3,3 +3,11 @@ Maven Config Fiels
 - look at ensuring config isn't put into classes/resources directories
   http://stackoverflow.com/questions/3001713/where-in-maven-projects-path-should-i-put-configuration-files-that-are-not-cons/3004684#3004684
   http://stackoverflow.com/questions/4113697/in-maven-how-to-exclude-resources-from-the-generated-jar 
+
+  
+- consider a time-based id system,
+  http://www.famkruithof.net/guid-uuid-timebased.html
+  http://code.flickr.net/2010/02/08/ticket-servers-distributed-unique-primary-keys-on-the-cheap/
+  https://github.com/twitter/snowflake
+  http://instagram-engineering.tumblr.com/post/10853187575/sharding-ids-at-instagram
+  
