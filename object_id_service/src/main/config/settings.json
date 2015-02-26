@@ -61,27 +61,27 @@
 					"description" : "The types support by the object id service.",
 					"settings" : [
 						{
-							"name" : "id_source.types",
+							"name" : "object_id_engine.types",
 							"value" : "user_account, user_profile, email_address_access, password_access, app",
 							"description" : "The types this service will generate object ids for."
 						},{
-							"name" : "id_source.types.user_account",
+							"name" : "object_id_engine.types.user_account",
 							"value" : "[id,1][name,user_account][description,Represents a user account in the system.]",
 							"description" : "The type details for a user account."
 						},{
-							"name" : "id_source.types.user_profile",
+							"name" : "object_id_engine.types.user_profile",
 							"value" : "[id,2][name,user_profile][description,Represents a user profile in the system.]",
 							"description" : "The type details for a user profile."
 						},{
-							"name" : "id_source.types.email_address_access",
+							"name" : "object_id_engine.types.email_address_access",
 							"value" : "[id,11][name,email_address_access][description,Represents email address information for an an account.]",
 							"description" : "The type details for email address access.."
 						},{
-							"name" : "id_source.types.password_access",
+							"name" : "object_id_engine.types.password_access",
 							"value" : "[id,20][name,password_access][description,Represents password information for an an account.]",
 							"description" : "The type details for a password access."
 						},{
-							"name" : "id_source.types.app",
+							"name" : "object_id_engine.types.app",
 							"value" : "[id,100][name,app][description,Represents an application in the system.]",
 							"description" : "The type details for an app."
 						}
@@ -97,11 +97,11 @@
 							"value" : "com.talvish.tales.rigs.objectid.service.ObjectIdService",
 							"description" : "The Java class of the service to run."
 						},{
-							"name" : "id_source.localhost.source_id",
+							"name" : "object_id_engine.sources.localhost.id",
 							"value" : "1",
 							"description" : "The setting id_source.hostname must be passed in on the command line and it will be used to find this source_id."
 						},{
-							"name" : "id_source.data_directory",
+							"name" : "object_id_engine.data_directory",
 							"value" : "data",
 							"description" : "The directory where data will be saved to disk. This is a path relative to the starting location of the service."
 						}
@@ -120,7 +120,7 @@
 					"settings" : [
 						{
 							"name" : "service.interfaces.internal.endpoints",
-							"value" : "http://*:7000",
+							"value" : "http://*:8000",
 							"override" : true
 						},{
 							"name" : "service.interfaces.admin.endpoints",
