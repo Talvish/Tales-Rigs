@@ -150,17 +150,17 @@
         <dependency>
 	   	    <groupId>com.talvish.tales</groupId>
 	   	    <artifactId>tales.common</artifactId>
-	   	    <version>1.6.8-SNAPSHOT</version>
+	   	    <version>1.6.9-SNAPSHOT</version>
 	   	</dependency>
     	<dependency>
 	   	    <groupId>com.talvish.tales</groupId>
 	   	    <artifactId>tales.client</artifactId>
-	   	    <version>1.6.8-SNAPSHOT</version>
+	   	    <version>1.6.9-SNAPSHOT</version>
 	   	</dependency>
 	   	<dependency>
 	   	    <groupId>com.talvish.tales</groupId>
 	   	    <artifactId>tales.services</artifactId>
-	   	    <version>1.6.8-SNAPSHOT</version>
+	   	    <version>1.6.9-SNAPSHOT</version>
 	   	</dependency>
 	  	<dependency>
 	    	<groupId>joda-time</groupId>
@@ -175,7 +175,7 @@
 		<dependency>
 		    <groupId>com.google.code.gson</groupId>
 	    	<artifactId>gson</artifactId>
-	    	<version>2.3.1</version>
+	    	<version>2.7</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.slf4j</groupId>

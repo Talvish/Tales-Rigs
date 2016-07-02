@@ -10,79 +10,42 @@
 					"deferred" : true,
 					"settings" : [
 						{
-							"name" : "service.interfaces",
-							"value" : "internal",
+							"service.interfaces" : ["internal"],
 							"description" : "The only interface needed is internal since this service is only used by other services."
 						},
-						
 						{
-							"name" : "service.interfaces.internal.type",
-							"value" : "com.talvish.tales.services.http.HttpInterface",
-							"description" : "The java class of the interface."
-						},{
-							"name" : "service.interfaces.internal.endpoints",
+							"service.interfaces.internal.endpoints" : null,
 							"deferred" : true,
 							"description" : "The endpoint location(s) for this interface."
-						},{
-							"name" : "service.interfaces.internal.connector",
-							"value" : "standard",
-							"description" : "The connector configuration to use for the interface."
 						},
-
 						{
-							"name" : "service.interfaces.admin.endpoints",
+							"service.interfaces.admin.endpoints" : null,
 							"deferred" : true,
 							"description" : "Admin interface is included by default and the same settings can be set like any HTTP interface, but endpoint is required."
 						}
 					]
 				},
 				{
-					"name" : "networking_connectors",
-					"description" : "Group of settings related to the connectors used by HTTP interfaces.",
-					"deferred" : true,
-					"settings" : [
-						{
-							"name" : "service.http_connectors",
-							"value" : "standard",
-							"description" : "The names of the connector configurations available to the system."
-						},{
-							"name" : "service.http_connectors.standard.idle_timeout",
-							"value" : "200",
-							"description" : "Amount of time to wait, in milliseconds, before a connection is considered idle."
-						},{
-							"name" : "service.http_connectors.standard.max_form_content_size",
-							"value" : "4194304",
-							"description" : "The maximum number of bytes that a single request is allowed to send to the service."
-						}
-					]
-				},	
-				{
 					"name" : "object_id_types",
 					"description" : "The types support by the object id service.",
 					"settings" : [
 						{
-							"name" : "object_id_engine.types",
-							"value" : "user_account, user_profile, email_address_access, password_access, app",
+							"object_id_engine.types" : [ "user_account", "user_profile", "email_address_access", "password_access", "app" ],
 							"description" : "The types this service will generate object ids for."
 						},{
-							"name" : "object_id_engine.types.user_account",
-							"value" : "[id,1][name,user_account][description,Represents a user account in the system.]",
+							"object_id_engine.types.user_account" : { "id" : 1, "name" : "user_account", "description" : "Represents a user account in the system."	}, 
 							"description" : "The type details for a user account."
 						},{
-							"name" : "object_id_engine.types.user_profile",
-							"value" : "[id,2][name,user_profile][description,Represents a user profile in the system.]",
+							"object_id_engine.types.user_profile" : { "id" : 2, "name" : "user_profile", "description" : "Represents a user profile in the system." },
 							"description" : "The type details for a user profile."
 						},{
-							"name" : "object_id_engine.types.email_address_access",
-							"value" : "[id,11][name,email_address_access][description,Represents email address information for an an account.]",
+							"object_id_engine.types.email_address_access" : { "id" : 11, "name" : "email_address_access", "description" : "Represents email address information for an an account." },
 							"description" : "The type details for email address access.."
 						},{
-							"name" : "object_id_engine.types.password_access",
-							"value" : "[id,20][name,password_access][description,Represents password information for an an account.]",
+							"object_id_engine.types.password_access" : { "id" : 20, "name" : "password_access", "description" : "Represents password information for an an account." },
 							"description" : "The type details for a password access."
 						},{
-							"name" : "object_id_engine.types.app",
-							"value" : "[id,100][name,app][description,Represents an application in the system.]",
+							"object_id_engine.types.app" : { "id" : 100, "name" : "app", "description" : "Represents an application in the system." },
 							"description" : "The type details for an app."
 						}
 					]
@@ -90,20 +53,14 @@
 				{
 					"name" : "object_id_service",
 					"description" : "The object id service specific setting.",
-					"includes" : [ "networking_interfaces", "networking_connectors", "object_id_types" ],
+					"includes" : [ "networking_interfaces", "object_id_types" ],
 					"settings" : [
 						{
-							"name" : "service.type",
-							"value" : "com.talvish.tales.rigs.objectid.service.ObjectIdService",
+							"service.type" : "com.talvish.tales.rigs.objectid.service.ObjectIdService",
 							"description" : "The Java class of the service to run."
 						},{
-							"name" : "object_id_engine.sources.localhost.id",
-							"value" : "1",
+							"object_id_engine.sources.localhost.id" : "1",
 							"description" : "The setting id_source.hostname must be passed in on the command line and it will be used to find this source_id."
-						},{
-							"name" : "object_id_engine.data_directory",
-							"value" : "data",
-							"description" : "The directory where data will be saved to disk. This is a path relative to the starting location of the service."
 						}
 					]
 				}	
@@ -119,12 +76,10 @@
 					"override" : true,
 					"settings" : [
 						{
-							"name" : "service.interfaces.internal.endpoints",
-							"value" : "http://*:8000",
+							"service.interfaces.internal.endpoints" : ["http://*:8000"],
 							"override" : true
 						},{
-							"name" : "service.interfaces.admin.endpoints",
-							"value" : "http://*:5000",
+							"service.interfaces.admin.endpoints" : ["http://*:5001"],
 							"override" : true
 						}
 					]
@@ -133,4 +88,3 @@
 		}
 	]
 }
-

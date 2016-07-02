@@ -90,8 +90,8 @@ public class ObjectIdEngine {
 		logger.info( "Service allows type caching for up to {} seconds.", maximumCacheAge );
 
 		// now we get the data directory and make sure it exists
-		dataDirectory = new File( configurationManager.getStringValue( ConfigurationConstants.DATA_DIRECTORY ) );
-		Preconditions.checkState( !dataDirectory.exists() || dataDirectory.isDirectory(), "The specified data directory, '%s', is not a directory.", dataDirectory.toString( ) );
+		dataDirectory = new File( configurationManager.getStringValue( ConfigurationConstants.DATA_DIRECTORY, "data" ) );
+		Preconditions.checkState( !dataDirectory.exists() || dataDirectory.isDirectory(), "The data directory, '%s', is not a directory.", dataDirectory.toString( ) );
 		if( !dataDirectory.exists( ) ) {
 			logger.warn( "Creating nonexistent data directory '{}'.", dataDirectory.toString( ) );
 			boolean directoryCreated = dataDirectory.mkdir();
