@@ -1,0 +1,21 @@
+{
+	"fetched_timestamp" : datetime,
+	"expired_timestamp" : datetime,
+	"server" : "server",
+	"settings" : [
+		{
+			"service.interfaces" : ["internal"],
+			"source" : "some source",
+			"sensitive" : true;
+			"description" : "The only interface needed is internal since this service is only used by other services."
+		},
+		{
+			"service.interfaces.internal.endpoints" : null,
+			"description" : "The endpoint location(s) for this interface."
+		},
+		{
+			"service.interfaces.admin.endpoints" : null,
+			"description" : "Admin interface is included by default and the same settings can be set like any HTTP interface, but endpoint is required."
+		}
+	]
+}

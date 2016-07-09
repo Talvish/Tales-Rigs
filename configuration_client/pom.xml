@@ -1,0 +1,50 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <artifactId>tales.rigs.configuration_client</artifactId>
+  <name>Tales-based Configuration Client</name>
+  <description>A client for talking to the service that can send configuration.</description>
+
+  <parent>
+    <groupId>com.talvish.tales.rigs</groupId>
+    <artifactId>tales.rigs.root</artifactId>
+    <version>0.5.0-SNAPSHOT</version>
+    <relativePath>../root/pom.xml</relativePath>    
+  </parent>
+
+  <build>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+      </plugin>
+      <plugin>
+	    <groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-source-plugin</artifactId>
+	  </plugin>
+      <plugin>
+      	<groupId>org.apache.maven.plugins</groupId>
+       	<artifactId>maven-javadoc-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+  
+  <dependencies>
+	<dependency>
+		<groupId>com.talvish.tales</groupId>
+		<artifactId>tales.common</artifactId>
+	</dependency>
+	<dependency>
+		<groupId>com.talvish.tales</groupId>
+		<artifactId>tales.client</artifactId>
+	</dependency>
+  	<dependency>
+    	<groupId>joda-time</groupId>
+    	<artifactId>joda-time</artifactId>
+	</dependency> 
+	<dependency>
+    	<groupId>ch.qos.logback</groupId>
+    	<artifactId>logback-classic</artifactId>
+    </dependency>	
+  </dependencies>
+</project>

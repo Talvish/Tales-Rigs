@@ -1,0 +1,66 @@
+{
+	"profiles" : [
+		{
+			"name" : "base",
+			"description" : "The base setup for the service.",
+			"blocks" : [
+				{
+					"name" : "networking_interfaces",
+					"description" : "Settings related to the network interfaces used in the system.",
+					"deferred" : true,
+					"settings" : [
+						{
+							"service.interfaces" : ["internal"],
+							"description" : "The only interface needed is internal since this service is only used by other services."
+						},
+						{
+							"service.interfaces.internal.endpoints" : null,
+							"deferred" : true,
+							"description" : "The endpoint location(s) for this interface."
+						},
+						{
+							"service.interfaces.admin.endpoints" : null,
+							"deferred" : true,
+							"description" : "Admin interface is included by default and the same settings can be set like any HTTP interface, but endpoint is required."
+						}
+					]
+				},
+				{
+					"name" : "configuration_service",
+					"description" : "The configuration service specific settings.",
+					"includes" : [ "networking_interfaces" ],
+					"settings" : [
+						{
+							"service.type" : "com.talvish.tales.rigs.configuration.service.ConfigurationService",
+							"description" : "The Java class of the service to run."
+						}
+					]
+				}	
+			]
+		},
+		{
+			"name" : "development",
+			"description" : "The development overrides for the service. If you wish to change values for development purposes, create your own profile and extend development.",
+			"extends" : "base",
+			"blocks" : [
+				{
+					"name" : "configuration_service",
+					"override" : true,
+					"settings" : [
+						{
+							"service.interfaces.internal.endpoints" : ["http://*:8000"],
+							"override" : true
+						},
+						{
+							"service.interfaces.admin.endpoints" : ["http://*:5001"],
+							"override" : true
+						},
+						{
+							"configuration_engine.settings.file" : "config/served_settings.json"
+						}
+					]
+				}
+			]
+		}
+	]
+}

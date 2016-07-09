@@ -204,6 +204,7 @@
   </distributionManagement>
 
   <modules>
+    <module>../configuration_service</module>
     <module>../object_id_client</module>
     <module>../object_id_service</module>
   </modules>

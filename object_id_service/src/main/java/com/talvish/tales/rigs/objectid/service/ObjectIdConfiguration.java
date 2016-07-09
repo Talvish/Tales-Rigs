@@ -1,9 +1,5 @@
 package com.talvish.tales.rigs.objectid.service;
 
-import java.util.List;
-
-import com.talvish.tales.serialization.OnDeserialized;
-import com.talvish.tales.system.configuration.annotated.Setting;
 
 /**
  * The object id engine's configuration. 
