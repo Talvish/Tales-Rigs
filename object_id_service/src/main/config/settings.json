@@ -59,6 +59,7 @@
 					"name" : "object_id_service",
 					"description" : "The object id service specific setting.",
 					"includes" : [ "networking_interfaces", "object_id_types" ],
+					"deferred" : true,
 					"settings" : [
 						{
 							"service.type" : "com.talvish.tales.rigs.objectid.service.ObjectIdService",
@@ -69,13 +70,18 @@
 							"description" : "The setting id_source.hostname must be passed in on the command line and it will be used to find this source_id."
 						},
 						{
-							"configuration_sources" : [ "network" ]
+							"settings.sources" : [ "com.talvish.tales.rigs.configuration.client.ConfigurationServiceSource" ]
 						},
 						{
-							"configuration_sources.network.type" : "com.talvish.tales.rigs.configuration.client.ConfigurationClient"
+							"configuration_service.profile" : null,
+							"deferred" : true
 						},
 						{
-							"configuration_sources.network.endpoint" : "http://localhost:8080"
+							"configuration_service.block" : "object_id_service"
+						},
+						{
+							"configuration_service.endpoint" : null,
+							"deferred" : true
 						}
 					]
 				}	
@@ -95,7 +101,15 @@
 							"override" : true
 						},
 						{
-							"service.interfaces.admin.endpoints" : ["http://*:5001"],
+							"service.interfaces.admin.endpoints" : ["http://*:5000"],
+							"override" : true
+						},
+						{
+							"configuration_service.profile" : "development",
+							"override" : true
+						},
+						{
+							"configuration_service.endpoint" : "http://localhost:8001",
 							"override" : true
 						}
 					]

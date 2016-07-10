@@ -48,7 +48,7 @@
 					"override" : true,
 					"settings" : [
 						{
-							"service.interfaces.internal.endpoints" : ["http://*:8000"],
+							"service.interfaces.internal.endpoints" : ["http://*:8001"],
 							"override" : true
 						},
 						{
