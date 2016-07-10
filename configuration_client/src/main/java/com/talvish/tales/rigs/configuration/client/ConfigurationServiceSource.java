@@ -49,20 +49,9 @@ public class ConfigurationServiceSource implements ConfigurationSource {
 		profile = theConfiguration.getProfile( );
 		block = theConfiguration.getBlock( );
 		sourceName = "[" + theConfiguration.getEndpoint() + "]";
-		client = null;
+		client = new ConfigurationClient( theConfiguration, "a" ); // TODO: need to get the user agent
 	}
 
-	public ConfigurationServiceSource( String theProfile, String theBlock ) {
-		Preconditions.checkArgument( !Strings.isNullOrEmpty( theProfile ), "need a profile" );
-		Preconditions.checkArgument( !Strings.isNullOrEmpty( theBlock ), "need a block" );
-		
-		profile = theProfile;
-		block = theBlock;
-		sourceName = "a"; // TODO: fix this
-		client = null;
-	}
-	
-	
 	protected void fetchSettings( ) {
 		try {
 			ResourceResult<List<Setting>> settingsResult = client.getSettings( profile, block );

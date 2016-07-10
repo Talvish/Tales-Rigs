@@ -37,7 +37,7 @@ public class ConfigurationConfiguration extends ResourceConfigurationBase<Config
 	
 	@Setting( name="{prefix}.clear_cache" )
 	private boolean clearCache = false;
-	
+
 	/**
 	 * Gets the profile that this configuration should used.
 	 * @return the profile to use for the configuration

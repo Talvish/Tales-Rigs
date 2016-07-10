@@ -42,7 +42,7 @@ public class ConfigurationClient extends ResourceClient {
      * @param theConfiguration the configuration to use to talk to the service
      * @param theUserAgent the user agent to use while talking to the service
      */
-	public ConfigurationClient( ResourceConfiguration theConfiguration, String theUserAgent ) {
+	public ConfigurationClient( ConfigurationConfiguration theConfiguration, String theUserAgent ) {
 		super( theConfiguration, "/configuration", "20160701", theUserAgent ); 
  
 		// we now define the methods that we are going to expose for calling
