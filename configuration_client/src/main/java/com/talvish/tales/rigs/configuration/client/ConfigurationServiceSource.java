@@ -23,8 +23,8 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.talvish.tales.client.http.ResourceResult;
 import com.talvish.tales.system.configuration.ConfigurationSource;
+import com.talvish.tales.system.configuration.JsonValueHelper;
 import com.talvish.tales.system.configuration.LoadedSetting;
-import com.talvish.tales.system.configuration.SettingValueHelper;
 import com.talvish.tales.system.configuration.SourceConfiguration;
 
 /**
@@ -96,7 +96,7 @@ public class ConfigurationServiceSource implements ConfigurationSource {
 		LoadedSetting setting = null;
 		Setting networkSetting = settings.get( theName );
 		if( networkSetting != null ) {
-			setting = SettingValueHelper.generateValue( theName, networkSetting.getValue(), networkSetting.getDescription(), networkSetting.isSensitive(), generateSourceName( networkSetting ), theType );
+			setting = JsonValueHelper.generateValue( theName, networkSetting.getValue(), networkSetting.getDescription(), networkSetting.isSensitive(), generateSourceName( networkSetting ), theType );
 		}
 		return setting;
 	}

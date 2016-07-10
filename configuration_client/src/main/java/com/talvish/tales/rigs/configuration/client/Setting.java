@@ -16,7 +16,7 @@ package com.talvish.tales.rigs.configuration.client;
 //***************************************************************************
 
 import com.google.common.base.Preconditions;
-
+import com.google.gson.JsonElement;
 import com.talvish.tales.contracts.data.DataContract;
 import com.talvish.tales.contracts.data.DataMember;
 import com.talvish.tales.serialization.json.UnmappedName;
@@ -44,7 +44,7 @@ public class Setting {
 	
 	@UnmappedValue( )
 	@DataMember( name="value" )
-	private String value;
+	private JsonElement value;
 
 	@DataMember( name="description" )
 	private String description;
@@ -98,7 +98,7 @@ public class Setting {
 	 * The value given to the setting.
 	 * @return the value of the setting
 	 */
-	public String getValue( ) {
+	public JsonElement getValue( ) {
 		return value;
 	}
 	

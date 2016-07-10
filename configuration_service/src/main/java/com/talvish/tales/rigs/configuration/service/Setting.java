@@ -16,7 +16,7 @@ package com.talvish.tales.rigs.configuration.service;
 //***************************************************************************
 
 import com.google.common.base.Preconditions;
-
+import com.google.gson.JsonElement;
 import com.talvish.tales.contracts.data.DataContract;
 import com.talvish.tales.contracts.data.DataMember;
 
@@ -29,7 +29,7 @@ import com.talvish.tales.contracts.data.DataMember;
  * The client will support storing on disk, which we may want to support
  * as something we could load in a source without all the overhead
  * in it we should store the datetime of the request as well 
- * as the datetime oif when it could expire
+ * as the datetime of when it could expire
  * @author josep
  *
  */
@@ -39,7 +39,7 @@ public class Setting {
 	@DataMember( name="name" )
 	private String name;
 	@DataMember( name="value" )
-	private String value;
+	private JsonElement value;
 
 	@DataMember( name="description" )
 	private String description;
@@ -93,7 +93,7 @@ public class Setting {
 	 * The value given to the setting.
 	 * @return the value of the setting
 	 */
-	public String getValue( ) {
+	public JsonElement getValue( ) {
 		return value;
 	}
 	
