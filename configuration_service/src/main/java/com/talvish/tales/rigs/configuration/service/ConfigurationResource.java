@@ -36,9 +36,12 @@ public class ConfigurationResource {
 		Preconditions.checkArgument( theEngine != null, "need an engine" );
 		engine = theEngine;
 	}
-	
+
 	/**
-	 * Sets up the types, processing those that may not be ready.
+	 * Gets the settings for the specific profile and block.
+	 * @param theProfile
+	 * @param theBlock
+	 * @return
 	 */
 	@ResourceOperation( name="get_settings", path="GET : settings" )
 	public List<Setting> getSettings( 
@@ -46,6 +49,13 @@ public class ConfigurationResource {
 			@RequestParam( name="block" ) String theBlock ) {
 		Conditions.checkParameter( !Strings.isNullOrEmpty( theProfile ), "profile" );
 		Conditions.checkParameter( !Strings.isNullOrEmpty( theBlock ), "block" );
-		return engine.getSettings( theProfile,  theBlock );
+		
+		List<Setting> settings = engine.getSettings( theProfile,  theBlock );
+
+		if( settings != null ) {
+			return settings;
+		} else {
+			return null; // TODO: need some errors 
+		}
 	}
 }

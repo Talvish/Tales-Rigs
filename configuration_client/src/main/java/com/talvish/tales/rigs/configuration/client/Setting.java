@@ -31,8 +31,8 @@ import com.talvish.tales.serialization.json.UnmappedValue;
  * The client will support storing on disk, which we may want to support
  * as something we could load in a source without all the overhead
  * in it we should store the datetime of the request as well 
- * as the datetime oif when it could expire
- * @author josep
+ * as the datetime of when it could expire.
+ * @author jmolnar
  *
  */
 

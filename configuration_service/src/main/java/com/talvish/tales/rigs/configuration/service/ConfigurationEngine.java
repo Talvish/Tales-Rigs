@@ -26,6 +26,7 @@ import com.google.common.base.Preconditions;
 
 import com.talvish.tales.contracts.data.DataContractTypeSource;
 import com.talvish.tales.serialization.json.JsonTranslationFacility;
+import com.talvish.tales.system.configuration.hierarchical.ProfileDescriptor;
 import com.talvish.tales.system.configuration.hierarchical.SourceManager;
 
 // TODO: consider an expiration in the LoadedSettings in the config settings which will cause a removal of
@@ -51,14 +52,17 @@ public class ConfigurationEngine {
 	}
 	
 	public List<Setting> getSettings( String theProfile, String theBlock ) {
-		Map<String,com.talvish.tales.system.configuration.hierarchical.Setting> extractedSettings = settingsSource.extractSettings(theProfile, theBlock);
-		ArrayList<Setting> returnSettings = new ArrayList<>( extractedSettings.size( ) );
-		
-		// TODO: there are plenty of failures here that we need to deal with, like the existence of the profile and the block,
-		//       we made the change to check/get BUT the descriptors aren't public, need to decide if I really want that
-		
-		for( com.talvish.tales.system.configuration.hierarchical.Setting setting : extractedSettings.values() ) {
-			returnSettings.add( new Setting( setting ) );
+		ArrayList<Setting> returnSettings = null;
+		ProfileDescriptor profile = settingsSource.getProfile( theProfile );
+		if( profile != null ) {
+			if( profile.hasAccessibleBlock( theBlock ) ) {
+				Map<String,com.talvish.tales.system.configuration.hierarchical.Setting> extractedSettings = settingsSource.extractSettings(theProfile, theBlock);
+				returnSettings = new ArrayList<>( extractedSettings.size( ) );
+				
+				for( com.talvish.tales.system.configuration.hierarchical.Setting setting : extractedSettings.values() ) {
+					returnSettings.add( new Setting( setting ) );
+				}
+			}
 		}
 		return returnSettings;
 	}

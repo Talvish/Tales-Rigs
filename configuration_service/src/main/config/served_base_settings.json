@@ -26,13 +26,45 @@
 					]
 				},
 				{
-					"name" : "configuration_service",
-					"includes" : [ "networking_interfaces" ],
+					"name" : "object_id_types",
+					"description" : "The definitions of the types used for object ids.",
 					"deferred" : true,
 					"settings" : [
 						{
-							"configuration_engine.settings.file" : null,
-							"deferred" : true
+							"object_id_engine.types" : [ "user_account", "user_profile", "email_address_access", "password_access", "app" ],
+							"description" : "The types this service will generate object ids for."
+						},
+						{
+							"object_id_engine.types.user_account" : { "id" : 1, "name" : "user_account", "description" : "Represents a user account in the system."	}, 
+							"description" : "The type details for a user account."
+						},
+						{
+							"object_id_engine.types.user_profile" : { "id" : 2, "name" : "user_profile", "description" : "Represents a user profile in the system." },
+							"description" : "The type details for a user profile."
+						},
+						{
+							"object_id_engine.types.email_address_access" : { "id" : 11, "name" : "email_address_access", "description" : "Represents email address information for an an account." },
+							"description" : "The type details for email address access.."
+						},
+						{
+							"object_id_engine.types.password_access" : { "id" : 20, "name" : "password_access", "description" : "Represents password information for an an account." },
+							"description" : "The type details for a password access."
+						},
+						{
+							"object_id_engine.types.app" : { "id" : 100, "name" : "app", "description" : "Represents an application in the system." },
+							"description" : "The type details for an app."
+						}						
+					]
+				},
+				{
+					"name" : "object_id_service",
+					"description" : "The settings needed by the object id service.",
+					"includes" : [ "networking_interfaces", "object_id_types" ],
+					"deferred" : true,
+					"settings" : [
+						{
+							"service.type" : "com.talvish.tales.rigs.objectid.service.ObjectIdService",
+							"description" : "The Java class of the service to run."
 						}
 					]
 				}

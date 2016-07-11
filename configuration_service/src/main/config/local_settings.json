@@ -56,7 +56,7 @@
 							"override" : true
 						},
 						{
-							"configuration_engine.settings.file" : "config/served_settings.json"
+							"configuration_engine.settings.file" : "config/served_development_settings.json"
 						}
 					]
 				}

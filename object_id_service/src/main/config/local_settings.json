@@ -1,0 +1,56 @@
+{
+	"profiles" : [
+		{
+			"name" : "base",
+			"description" : "The base setup for the service.",
+			"blocks" : [
+				{
+					"name" : "object_id_service",
+					"description" : "The object id service specific setting.",
+					"deferred" : true,
+					"settings" : [
+						{
+							"object_id_engine.sources.localhost.id" : "1",
+							"description" : "The setting id_source.hostname must be passed in on the command line and it will be used to find this source_id."
+						},
+						{
+							"settings.sources" : [ "com.talvish.tales.rigs.configuration.client.ConfigurationServiceSource" ]
+						},
+						{
+							"configuration_service.profile" : null,
+							"deferred" : true
+						},
+						{
+							"configuration_service.block" : "object_id_service"
+						},
+						{
+							"configuration_service.endpoint" : null,
+							"deferred" : true
+						}
+					]
+				}	
+			]
+		},
+		{
+			"name" : "development",
+			"description" : "The development overrides for the service. If you wish to change values for development purposes, create your own profile and extend development.",
+			"extends" : "base",
+			"blocks" : [
+				{
+					"name" : "object_id_service",
+					"override" : true,
+					"settings" : [
+						{
+							"configuration_service.profile" : "development",
+							"override" : true
+						},
+						{
+							"configuration_service.endpoint" : "http://localhost:8001",
+							"override" : true
+						}
+					]
+				}
+			]
+		}
+	]
+}

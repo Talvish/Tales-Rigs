@@ -19,6 +19,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.talvish.tales.client.http.ResourceResult;
@@ -35,6 +38,8 @@ import com.talvish.tales.system.configuration.SourceConfiguration;
  */
 @SourceConfiguration( settingsClass = ConfigurationConfiguration.class )
 public class ConfigurationServiceSource implements ConfigurationSource {
+	private static final Logger logger = LoggerFactory.getLogger( ConfigurationServiceSource.class ); 
+			
 	private final ConfigurationClient client;
 	private final String sourceName;
 	private final String profile;
@@ -50,22 +55,35 @@ public class ConfigurationServiceSource implements ConfigurationSource {
 		block = theConfiguration.getBlock( );
 		sourceName = "[" + theConfiguration.getEndpoint() + "]";
 		client = new ConfigurationClient( theConfiguration, "a" ); // TODO: need to get the user agent
+		
+		fetchSettings( );
 	}
 
 	protected void fetchSettings( ) {
 		try {
 			ResourceResult<List<Setting>> settingsResult = client.getSettings( profile, block );
 			
-			// TODO: check the result
-			
-			List<Setting> settingsList = settingsResult.getResult( );
-			Map<String, Setting> settingsMap = new HashMap<>( settingsList.size( ) );
-			
-			for( Setting setting : settingsList ) {
-				settingsMap.put( setting.getName(), setting );
+			if( settingsResult.getStatus( ).getCode().isSuccess( ) ) {
+				List<Setting> settingsList = settingsResult.getResult( );
+				if( settingsList != null ) {
+					Map<String, Setting> settingsMap = new HashMap<>( settingsList.size( ) );
+					
+					for( Setting setting : settingsList ) {
+						settingsMap.put( setting.getName(), setting );
+					}
+					
+					settings = settingsMap;
+				} else {
+					logger.warn(  "While a successful response, no settings were received from '{}'.", sourceName );
+				}
+			} else {
+				logger.warn( 
+						"Received status '{}|{}' and message '{}' while attempting to get settings from '{}'.", 
+						settingsResult.getStatus().getCode(), 
+						settingsResult.getStatus().getSubcode(), 
+						settingsResult.getStatus().getMessage(),
+						sourceName );
 			}
-			
-			settings = settingsMap;
 			
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -109,15 +127,15 @@ public class ConfigurationServiceSource implements ConfigurationSource {
 	 * @return a configuration setting generated for value, if found, null otherwise
 	 */
 	public LoadedSetting getList( String theName, Class<?> theElementType ) {
-//		Preconditions.checkArgument( !Strings.isNullOrEmpty( theName ), "Name value is null or empty.");
-//		Preconditions.checkNotNull( theElementType, "Need an element type to be able to translate." );
-//
-//		LoadedSetting setting = null;
-//		if( properties.containsKey( theName ) ) {
-//			setting = SettingValueHelper.generateList( theName, properties.getProperty( theName ), null, false, sourceName, theElementType );
-//		}
-//		return setting;
-		return null;
+		Preconditions.checkArgument( !Strings.isNullOrEmpty( theName ), "Name value is null or empty.");
+		Preconditions.checkNotNull( theElementType, "Need an element type to be able to translate." );
+
+		LoadedSetting setting = null;
+		Setting networkSetting = settings.get( theName );
+		if( networkSetting != null  ) {
+			setting = JsonValueHelper.generateList( theName, networkSetting.getValue(), networkSetting.getDescription(), networkSetting.isSensitive(), generateSourceName( networkSetting ), theElementType );
+		}
+		return setting;
 	}
 	
 	/**
@@ -129,16 +147,16 @@ public class ConfigurationServiceSource implements ConfigurationSource {
 	 * @return a configuration setting generated for value, if found, null otherwise
 	 */
 	public LoadedSetting getMap( String theName, Class<?> theKeyType, Class<?> theValueType ) {
-//		Preconditions.checkArgument( !Strings.isNullOrEmpty( theName ), "Name value is null or empty.");
-//		Preconditions.checkNotNull( theKeyType, "Need a key type to be able to translate." );
-//		Preconditions.checkNotNull( theValueType, "Need a value type to be able to translate." );
-//
-//		LoadedSetting setting = null;
-//		if( properties.containsKey( theName ) ) {
-//			setting = SettingValueHelper.generateMap( theName, properties.getProperty( theName ), null, false, sourceName, theKeyType, theValueType );
-//		}
-//		return setting;
-		return null;
+		Preconditions.checkArgument( !Strings.isNullOrEmpty( theName ), "Name value is null or empty.");
+		Preconditions.checkNotNull( theKeyType, "Need a key type to be able to translate." );
+		Preconditions.checkNotNull( theValueType, "Need a value type to be able to translate." );
+
+		LoadedSetting setting = null;
+		Setting networkSetting = settings.get( theName );
+		if( networkSetting != null  ) {
+			setting = JsonValueHelper.generateMap( theName, networkSetting.getValue(), networkSetting.getDescription(), networkSetting.isSensitive(), generateSourceName( networkSetting ), theKeyType, theValueType );
+		}
+		return setting;
 	}
 	
 	/**

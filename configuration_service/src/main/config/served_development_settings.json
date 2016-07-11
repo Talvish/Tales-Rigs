@@ -1,0 +1,28 @@
+{
+	"includes" : [
+		"served_base_settings.json" 
+	], 
+	"profiles" : [
+		{
+			"name" : "development",
+			"description" : "The development overrides for the service. If you wish to change values for development purposes, create your own profile and extend development.",
+			"extends" : "base",
+			"blocks" : [
+				{
+					"name" : "object_id_service",
+					"override" : true,
+					"settings" : [
+						{
+							"service.interfaces.internal.endpoints" : ["http://*:8000"],
+							"override" : true
+						},
+						{
+							"service.interfaces.admin.endpoints" : ["http://*:5000"],
+							"override" : true						}
+
+					]
+				}
+			]
+		}
+	]
+}
