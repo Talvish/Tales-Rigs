@@ -19,6 +19,8 @@ import com.google.common.base.Preconditions;
 import com.google.gson.JsonElement;
 import com.talvish.tales.contracts.data.DataContract;
 import com.talvish.tales.contracts.data.DataMember;
+import com.talvish.tales.serialization.json.UnmappedName;
+import com.talvish.tales.serialization.json.UnmappedValue;
 
 /**
  * This class represents the wire version of a setting to return.
@@ -36,8 +38,11 @@ import com.talvish.tales.contracts.data.DataMember;
 
 @DataContract( name="com.talvish.tales.configuration.setting")
 public class Setting {
+	@UnmappedName
 	@DataMember( name="name" )
 	private String name;
+	
+	@UnmappedValue
 	@DataMember( name="value" )
 	private JsonElement value;
 

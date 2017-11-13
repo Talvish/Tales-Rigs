@@ -13,13 +13,13 @@
 					"override" : true,
 					"settings" : [
 						{
-							"service.interfaces.internal.endpoints" : ["http://*:8000"],
+							"service.interfaces.internal.endpoints" : ["http://*:8080"],
 							"override" : true
 						},
 						{
 							"service.interfaces.admin.endpoints" : ["http://*:5000"],
-							"override" : true						}
-
+							"override" : true
+						}
 					]
 				}
 			]

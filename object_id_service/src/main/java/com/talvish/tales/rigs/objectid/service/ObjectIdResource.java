@@ -26,7 +26,9 @@ import com.talvish.tales.contracts.services.http.RequestParam;
 import com.talvish.tales.contracts.services.http.ResourceContract;
 import com.talvish.tales.contracts.services.http.ResourceOperation;
 import com.talvish.tales.contracts.services.http.ResourceResult;
-import com.talvish.tales.system.Conditions;
+import com.talvish.tales.validation.Conditions;
+import com.talvish.tales.validation.constraints.Min;
+import com.talvish.tales.validation.constraints.NotEmpty;
 
 /**
  * HTTP resource contract for generating ids for client services.
@@ -74,14 +76,14 @@ public class ObjectIdResource {
 	 * @param theTypeId the type id to retrieve information for
 	 * @return the information regarding the specified type id
 	 */
+	//@Cache( maxAge="com.somethign.something" )
+	//@NotNull( ) // though we would want it to act differently depending on issue (so, sometimes a 401 or so)
 	@ResourceOperation( name="get_id_type_by_id", path="GET : types/{type_id : [0-9]+}" ) // regex separates from below method, this must be a number
-	public ResourceResult<IdType> getType( @PathParam( name="type_id" )int theTypeId ) { 
-		Conditions.checkParameter( theTypeId > 0, "type_id", "the type id must be greater than 0" );
-
+	public ResourceResult<IdType> getType( @Min( 1 ) @PathParam( name="type_id" )int theTypeId ) { 
 		ResourceResult<IdType> result = new ResourceResult<IdType>( );
 		IdType idType = engine.getType( theTypeId );
 		
-		Conditions.checkFound( idType != null, "type_id", "Could not find the type identified by the id '%s'.", theTypeId );
+		Conditions.checkFound( idType != null, Integer.toString( theTypeId ), "Could not find the type identified by the id '%s'.", theTypeId );
 		
 		result.setResult( idType, Status.OPERATION_COMPLETED );;
 		result.setCachingEnabled( engine.getMaximumCacheAge( ) );
@@ -95,16 +97,14 @@ public class ObjectIdResource {
 	 * @return the information regarding the specified type name
 	 */
 	@ResourceOperation( name="get_id_type_by_name", path="GET : types/{type_name : [a-zA-Z_].*}" ) // regex separates from above method, this must start with a letter or underscore
-	public ResourceResult<IdType> getType( @PathParam( name="type_name" )String theTypeName ) { 
-		Conditions.checkParameter( !Strings.isNullOrEmpty( theTypeName ), "type_name", "the type name must not be null or empty" );
-		
+	public ResourceResult<IdType> getType( @NotEmpty @PathParam( name="type_name" )String theTypeName ) { 
 		ResourceResult<IdType> result = new ResourceResult<IdType>( );
 		IdType idType = engine.getType( theTypeName );
 		
-		Conditions.checkFound( idType != null, "type_name", "Could not find the type identified by the name '%s'.", theTypeName );
+		Conditions.checkFound( idType != null, theTypeName, "Could not find the type identified by the name '%s'.", theTypeName ); // TODO: and this is why you have constraints on the return side 
 
 		result.setResult( idType, Status.OPERATION_COMPLETED );;
-		result.setCachingEnabled( engine.getMaximumCacheAge( ) );
+		result.setCachingEnabled( engine.getMaximumCacheAge( ) ); // TODO: could i make this an annotation BUT have it reference a configuration setting somehow?
 		
 		return result;
 	}
@@ -117,13 +117,11 @@ public class ObjectIdResource {
 	 */
 	@ResourceOperation( name="generate_ids", path="POST : types/{type_name}/generate_ids" )
 	public IdBlock generateIds( 
-			@PathParam( name="type_name" )String theTypeName,
-			@RequestParam( name="amount")int theAmount ) { 
-		Conditions.checkParameter( !Strings.isNullOrEmpty( theTypeName ), "type_name", "the type name must not be null or empty" );
-		Conditions.checkParameter( theAmount > 0, "amount", "the number of ids being requested must be greater than 0" );
+			@NotEmpty @PathParam( name="type_name" )String theTypeName,
+			@Min( 1 ) @RequestParam( name="amount")int theAmount ) { 
 
 		IdBlock idBlock = engine.generateIds( theTypeName, theAmount);
-		Conditions.checkFound( idBlock != null, "type_name", "Could not find the type identified by the name '%s'.", theTypeName );
+		Conditions.checkFound( idBlock != null, theTypeName, "Could not find the type identified by the name '%s'.", theTypeName );
 				
 		return idBlock;
 	}

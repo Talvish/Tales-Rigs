@@ -18,11 +18,10 @@ package com.talvish.tales.rigs.configuration.service;
 import java.util.List;
 
 import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
 import com.talvish.tales.contracts.services.http.RequestParam;
 import com.talvish.tales.contracts.services.http.ResourceContract;
 import com.talvish.tales.contracts.services.http.ResourceOperation;
-import com.talvish.tales.system.Conditions;
+import com.talvish.tales.validation.constraints.NotEmpty;
 
 @ResourceContract( name="com.tales.configuration_contract", versions={ "20160701" } )
 public class ConfigurationResource {
@@ -45,11 +44,8 @@ public class ConfigurationResource {
 	 */
 	@ResourceOperation( name="get_settings", path="GET : settings" )
 	public List<Setting> getSettings( 
-			@RequestParam( name="profile" ) String theProfile, 
-			@RequestParam( name="block" ) String theBlock ) {
-		Conditions.checkParameter( !Strings.isNullOrEmpty( theProfile ), "profile" );
-		Conditions.checkParameter( !Strings.isNullOrEmpty( theBlock ), "block" );
-		
+			@NotEmpty @RequestParam( name="profile" ) String theProfile, 
+			@NotEmpty @RequestParam( name="block" ) String theBlock ) {
 		List<Setting> settings = engine.getSettings( theProfile,  theBlock );
 
 		if( settings != null ) {

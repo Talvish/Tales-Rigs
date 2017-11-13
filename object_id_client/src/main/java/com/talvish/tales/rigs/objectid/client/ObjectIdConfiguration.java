@@ -16,9 +16,9 @@
 package com.talvish.tales.rigs.objectid.client;
 
 import com.talvish.tales.client.http.ResourceConfigurationBase;
-import com.talvish.tales.system.Conditions;
 import com.talvish.tales.system.configuration.annotated.Setting;
 import com.talvish.tales.system.configuration.annotated.Settings;
+import com.talvish.tales.validation.Conditions;
 
 /**
  * The configuration needed to setup the object id manager to retrieving object ids locally.

@@ -17,16 +17,38 @@
 							"settings.sources" : [ "com.talvish.tales.rigs.configuration.client.ConfigurationServiceSource" ]
 						},
 						{
+							"configuration_service.endpoint" : null,
+							"deferred" : true
+						},
+						{
 							"configuration_service.profile" : null,
 							"deferred" : true
+						},
+						{
+							"name" : "service.interfaces.public.connector",
+							"value" : "standard",
+							"description" : "The connector configuration to used for public interface."
+						},
+						{
+							"name" : "service.interfaces.internal.connector",
+							"value" : "standard",
+							"description" : "The connector configuration to used for internal interface."
+						},
+						{
+							"name" : "service.interfaces.management.connector",
+							"value" : "standard",
+							"description" : "The connector configuration to used for management interface."
 						},
 						{
 							"configuration_service.block" : "object_id_service"
 						},
 						{
-							"configuration_service.endpoint" : null,
-							"deferred" : true
-						}
+							"service.http_connectors" : [ "standard" ],
+							"description" : "The supported connector configurations available."
+						},
+						{
+							"service.http_connectors.standard.protocols" : ["http1.1" ]
+						}						
 					]
 				}	
 			]
@@ -41,11 +63,11 @@
 					"override" : true,
 					"settings" : [
 						{
-							"configuration_service.profile" : "development",
+							"configuration_service.endpoint" : "http://localhost:8001",
 							"override" : true
 						},
 						{
-							"configuration_service.endpoint" : "http://localhost:8001",
+							"configuration_service.profile" : "development",
 							"override" : true
 						}
 					]

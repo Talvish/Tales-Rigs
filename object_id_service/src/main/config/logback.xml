@@ -5,9 +5,9 @@
     </encoder>
   </appender>
 
-  <logger name="org.eclipse.jetty" level="WARN" />
+  <logger name="org.eclipse.jetty" level="ERROR" />
 
-  <root level="DEBUG">
+  <root level="INFO">
     <appender-ref ref="STDOUT" />
   </root>
 </configuration>

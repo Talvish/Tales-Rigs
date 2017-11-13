@@ -23,7 +23,7 @@ import com.talvish.tales.client.http.ResourceMethod;
 import com.talvish.tales.client.http.ResourceResult;
 import com.talvish.tales.communication.HttpVerb;
 import com.talvish.tales.parts.reflection.TypeUtility;
-import com.talvish.tales.system.Conditions;
+import com.talvish.tales.validation.Conditions;
 
 /**
  * The client for talking to the ObjectIdService. The client is 
